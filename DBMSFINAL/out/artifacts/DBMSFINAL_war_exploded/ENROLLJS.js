@@ -34,18 +34,23 @@ function checkdata(){
     return true;
 }
 
-function sendData(){
-    if(click_sumbit===true && checkdata()){
-        var obj1=new data(email.value,password.value,first.value,last.value,address.value,place.options[place.selectedIndex].text);
-        var xhttp=new XMLHttpRequest();
-        xhttp.onreadystatechange=function () {
-            var rt=this.responseText;
-            console.log(rt);
-        }
-        var jsonData=JSON.stringify(obj1);
+
+function sendData() {
+    var xhttp = new XMLHttpRequest();
+    if (click_sumbit === true && checkdata()) {
+        var obj1 = new data(email.value, password.value, first.value, last.value, address.value, place.options[place.selectedIndex].text);
+        var jsonData = JSON.stringify(obj1);
         console.log(jsonData);
-        xhttp.open("POST","enroll",true);
+        xhttp.open("POST", "enroll", true);
         xhttp.send(jsonData);
-        click_sumbit=false;
+  }
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var rt = this.responseText;
+            console.log(rt);
+            if (rt.trim()==="yes") {
+                click_sumbit = false;
+            }
+        }
     }
 }

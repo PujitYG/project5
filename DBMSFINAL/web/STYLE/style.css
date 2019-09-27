@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'eliantoregular';
+    src: url('Fonts/elianto-regular-webfont.woff2') format('woff2'),
+         url('Fonts/elianto-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#content{
+    background-image: url("mainPIC.jpg");
+    margin-top: 8%;
+
+}
+
+#body-id{
+    background-color: black;
+}
+
+    #main-container{
+        position: relative;
+        padding: 0 5%;
+        background-color: black;
+    }
+
+    .right-main{
+        display: inline-block;
+        width:30%;
+        position: relative;
+        left:60%;
+    }
+
+    @media screen and (max-width: 992px) {
+        .right-main {
+          width:100%;
+          text-align:center;
+          position: relative;
+          left:0;
+        }
+        #description-id{
+            font-family:'eliantoregular';
+            margin-bottom:220px;
+            margin-top:180px;
+            text-align: center;
+            font-size: 33px;
+            color:rgb(255, 255, 255);
+        }
+      }
+
+    .description{
+        font-family:'eliantoregular';
+        margin-bottom:240px;
+        margin-top:160px;
+        text-align: center;
+        font-size: 33px;
+        color:white;
+    }
+    .row{
+        padding: 0px;
+    }
+    #navigation-bar{
+        color:white;
+        margin-left: auto;
+    }
+    #custom-nav{
+        width:100%;
+        position: absolute;
+        z-index: 1;
+        margin-top:50px;
+        margin-bottom: 20px;
+        background-color: black;
+    }
+    #nav-col{
+        padding-left:0;
+        padding-right: 0;
+    }
+
+    .navbar-brand{
+        font-family:'eliantoregular';
+    }

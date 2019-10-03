@@ -1,3 +1,4 @@
+var invalid=document.getElementById('invalid');
 var email=document.getElementsByClassName("email-data")[0];
 var password=document.getElementsByClassName("password-data")[0];
 var first=document.getElementsByClassName("first-data")[0];
@@ -7,6 +8,8 @@ var place=document.getElementById('location-data');
 var submit=document.getElementById('button');
 var click_sumbit=true;
 submit.addEventListener("click",sendData);
+var p=document.createElement('p');
+invalid.appendChild(p);
 
 function data(email,password,first,last,address,location){
     this.email=email;
@@ -19,16 +22,16 @@ function data(email,password,first,last,address,location){
 
 function checkdata(){
     if(email.value===""){
-        console.log("please enter EMAIL");
+        p.innerText="Please enter Email"
         return false;
     }else if(password.value===""){
-        console.log("please enter EMAIL");
+        p.innerText="Please enter Password";
         return false;
     }else if(first.value===""){
-        console.log("please enter EMAIL");
+        p.innerText="Please enter FIRST NAME";
         return false;
     }else if(address.value===""){
-        console.log("please enter EMAIL");
+        p.innerText="Please enter Address"
         return false;
     }
     return true;
@@ -36,10 +39,11 @@ function checkdata(){
 
 
 function sendData() {
+    var jsonData;
     var xhttp = new XMLHttpRequest();
     if (click_sumbit === true && checkdata()) {
         var obj1 = new data(email.value, password.value, first.value, last.value, address.value, place.options[place.selectedIndex].text);
-        var jsonData = JSON.stringify(obj1);
+        jsonData = JSON.stringify(obj1);
         console.log(jsonData);
         xhttp.open("POST", "enroll", true);
         xhttp.send(jsonData);
@@ -47,9 +51,13 @@ function sendData() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var rt = this.responseText;
-            console.log(rt);
-            if (rt.trim()==="yes") {
+            if (rt.trim()==="SUCCESSFUL") {
                 click_sumbit = false;
+                p.innerText=rt;
+                window.sessionStorage.setItem("enroll",jsonData);
+                window.location.href="enroll_confirmation.jsp";
+            }else{
+                p.innerText=rt;
             }
         }
     }

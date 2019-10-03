@@ -1,5 +1,9 @@
 import com.google.gson.Gson;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +19,7 @@ public class enroll extends HttpServlet {
     static final String USER = "root";
     static final String PASS = "dancebar123";
     public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
-             PrintWriter pwrite=res.getWriter();
+            PrintWriter pwrite=res.getWriter();
             InputStream istream = req.getInputStream();
             StringBuffer indata = new StringBuffer();
             Scanner in = new Scanner(istream);
@@ -26,10 +30,14 @@ public class enroll extends HttpServlet {
             dataObj a = gson.fromJson(String.valueOf(indata), dataObj.class);
             try{
                 if (verification(a)) {
-                    sendData(a);
-                    pwrite.println("yes");
+                    if(!email(a.email)) {
+//                        sendData(a);
+                        pwrite.println("SUCCESSFUL");
+                    }else{
+                        pwrite.println("Invalid EMAIL");
+                    }
                 }else{
-                    pwrite.println("no");
+                    pwrite.println("PLEASE CHECK THE DETAILS");
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -40,8 +48,7 @@ public class enroll extends HttpServlet {
         int Nflag = 0, Pflag = 0, Eflag=0;
             if (a.first.matches("^[a-zA-Z]*$")) Nflag =1;
             if(strongPass(a.password)) Pflag =1;
-           if(!email(a.email)) Eflag=1;
-        return (Nflag == 1) && (Pflag == 1) && (Eflag == 1);
+        return (Nflag == 1) && (Pflag == 1);
         }
 
     static boolean email(String email) throws ClassNotFoundException, SQLException {
@@ -51,7 +58,7 @@ public class enroll extends HttpServlet {
         System.out.println("email connecting");
         conn=DriverManager.getConnection("jdbc:mysql://localhost/learn","root","dancebar123");
         stmt=conn.createStatement();
-        String sql="select name from emp where name='"+email+"'";
+        String sql="select first from manager where email='"+email+"'";
         ResultSet rs=stmt.executeQuery(sql);
         return rs.next();
     }
@@ -68,7 +75,6 @@ public class enroll extends HttpServlet {
                 else if (Character.isUpperCase(x)) hasUppercase = true;
                 else if (Character.isDigit(x)) hasDigit = true;
                 else if (Character.isDefined(x)) hasSymbol = true;
-                System.out.println(hasDigit+" "+hasSymbol+" "+" "+hasUppercase+" "+hasLowercase);
                 if (hasDigit && hasLowercase && hasSymbol && hasUppercase) return true;
             }
         }
@@ -76,22 +82,21 @@ public class enroll extends HttpServlet {
     }
 
 
-    public static boolean sendData(dataObj a) throws SQLException,Exception{
-            Connection conn = null;
-            Statement stmt = null;
-            String user,pass;
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("connecting:");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/learn",USER,PASS);
-            System.out.println("getting statement:");
-            stmt = conn.createStatement();
-            String sqlstmt = "insert into emp values('"+a.first+"','"+a.last+"')";
-            stmt.execute(sqlstmt);
-        return true;
-    }
+//    public static boolean sendData(dataObj a) throws SQLException,Exception{
+//            Connection conn = null;
+//            Statement stmt = null;
+//            String user,pass;
+//            Class.forName("com.mysql.jdbc.Driver");
+//            System.out.println("connecting:");
+//            conn = DriverManager.getConnection("jdbc:mysql://localhost/learn",USER,PASS);
+//            System.out.println("getting statement:");
+//            stmt = conn.createStatement();
+//            String sqlstmt = "insert into emp values('"+a.first+"','"+a.last+"')";
+//            stmt.execute(sqlstmt);
+//        return true;
+//    }
 }
 
 class dataObj{
-    public String email, password,first,last,address,location;
-
+    public String id,email, password,first,last,address,location;
 }

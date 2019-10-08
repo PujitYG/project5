@@ -1,3 +1,5 @@
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +12,7 @@ import java.util.Enumeration;
 
 @WebServlet("/manager")
 public class manager extends HttpServlet {
-    public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String id=req.getParameter("id");
         String password=req.getParameter("password");
         ManagerInfo manager=new ManagerInfo(id,password);
@@ -21,7 +23,8 @@ public class manager extends HttpServlet {
             e.printStackTrace();
         }
         if(check){
-            res.sendRedirect("product.jsp");
+            RequestDispatcher rd=req.getRequestDispatcher("product.jsp");
+            rd.forward(req,res);
         }else{
             res.sendRedirect("Manager.html");
         }

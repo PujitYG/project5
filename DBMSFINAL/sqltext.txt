@@ -1,0 +1,12 @@
+create table manager(
+email varchar(20),
+password varchar(30),
+first varchar(20),
+last varchar(20),
+address varchar(30),
+location varchar(20),
+id varchar(20),
+company
+primary key(id));
+
+insert into manager values('pujityg@gmail.com','Hello@123','Pujit','YG','JSSATE','Bangalore','1000');

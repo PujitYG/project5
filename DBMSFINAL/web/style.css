@@ -1,0 +1,26 @@
+#row-col{
+    text-align: center;
+}
+
+.login-left,.login-right{
+    margin-top:240px;
+}
+
+.btn{
+    width:100px;
+}
+
+#main-section{
+    height:100vh;
+    background-color: rgb(201, 196, 196);
+}
+
+.login-text{
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+}
+
+#cont{
+    /* background-color: rgb(201, 196, 196); */
+}

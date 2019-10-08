@@ -31,6 +31,10 @@
     }
 
     @media screen and (max-width: 992px) {
+        #content{
+            background-image: linear-gradient(black,rgb(201, 196, 196));
+        }
+
         .right-main {
           width:100%;
           text-align:center;

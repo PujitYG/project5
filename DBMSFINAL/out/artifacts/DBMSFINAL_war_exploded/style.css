@@ -12,7 +12,7 @@
 
 #main-section{
     height:100vh;
-    background-color: rgb(201, 196, 196);
+    /*background-image: linear-gradient(rgb(201, 196, 196),black);*/
 }
 
 .login-text{
@@ -21,6 +21,14 @@
     display: inline-block;
 }
 
+span,p{
+    color: white;
+}
+
+@media screen and (max-width: 992px) {
+
+}
+
 #cont{
-    /* background-color: rgb(201, 196, 196); */
+    background-image: linear-gradient(rgb(201, 196, 196),black);
 }

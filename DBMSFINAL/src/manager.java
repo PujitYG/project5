@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class manager extends HttpServlet {
         String id=req.getParameter("id");
         String password=req.getParameter("password");
         ManagerInfo manager=new ManagerInfo(id,password);
+        HttpSession ses=req.getSession();
         boolean check=false;
         try{
            check=checkDB(manager);
@@ -23,8 +25,8 @@ public class manager extends HttpServlet {
             e.printStackTrace();
         }
         if(check){
-            RequestDispatcher rd=req.getRequestDispatcher("managerProduct");
-            req.setAttribute("id",id);
+            RequestDispatcher rd=req.getRequestDispatcher("product.jsp");
+            ses.setAttribute("id",id);
             rd.forward(req,res);
         }else{
             res.sendRedirect("Manager.html");

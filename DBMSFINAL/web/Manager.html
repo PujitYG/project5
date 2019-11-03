@@ -19,7 +19,7 @@
                     <div class="col-lg-6 col-sm-12">
                             <div class="login-right">
                                 <p><strong>Please enter Id and Password</strong></p>
-                                    <form id="form-id">
+                                    <form method="post" id="form-id">
                                         <span class="login-text"><strong>Id</strong></span><br>
                                         <input id="id-text" class="login-text" name="id" type="text" onblur="checkId()"><br><br>
                                          <span class="login-text"><strong>Password</strong></span><br>
@@ -52,7 +52,6 @@
             }else{
                 var form_id=document.getElementById("form-id");
                 form_id.setAttribute("action","manager");
-                form_id.setAttribute("method","POST")
             }
         }
     </script>

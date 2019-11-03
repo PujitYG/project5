@@ -23,7 +23,8 @@ public class manager extends HttpServlet {
             e.printStackTrace();
         }
         if(check){
-            RequestDispatcher rd=req.getRequestDispatcher("product.jsp");
+            RequestDispatcher rd=req.getRequestDispatcher("managerProduct");
+            req.setAttribute("id",id);
             rd.forward(req,res);
         }else{
             res.sendRedirect("Manager.html");

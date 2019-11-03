@@ -81,7 +81,6 @@ public class enroll extends HttpServlet {
             return false;
     }
 
-
 //    public static boolean sendData(dataObj a) throws SQLException,Exception{
 //            Connection conn = null;
 //            Statement stmt = null;

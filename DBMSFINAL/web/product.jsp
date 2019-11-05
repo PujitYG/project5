@@ -29,9 +29,18 @@
         }
         try {
             assert conn != null;
-            PreparedStatement stmt=conn.prepareStatement(finalSql);
-            rs=integrate(finalSql,request.getParameterValues("color"),request.getParameterValues("connect"),request.getParameterValues("age"),request.getParameterValues("type"),stmt);
-        } catch (SQLException e) {
+            String value = request.getParameter("search-value");
+            if (value == null)
+                value = "";
+            Statement st = conn.createStatement();
+            if (value.trim().length() == 0) {
+                PreparedStatement stmt = conn.prepareStatement(finalSql);
+                rs = integrate(finalSql, request.getParameterValues("color"), request.getParameterValues("connect"), request.getParameterValues("age"), request.getParameterValues("type"), stmt);
+            } else if (value.trim().length() != 0) {
+                String sql2 = "Select * from product where id='" + id + "' and name='" + value + "'";
+                rs = st.executeQuery(sql2);
+            }
+        }catch (SQLException e) {
             e.printStackTrace();
         }
     %>
@@ -70,12 +79,13 @@
     %>
     <%!
         public static StringBuilder build(String[] values, String att,String id){
-            String si="Select pid from pro1 where id='"+id+"'";
+            String si="Select pid from product where id='"+id+"'";
             StringBuilder sb=new StringBuilder(si);
             if(values!=null){
                 for(int i=0;i<values.length;i++){
                     if(i==0){
                         sb.append(" and "+att+"=?");
+                        sb.append(" or "+att+" is null");
                     }else{
                         sb.append(" or "+att+"=?");
                     }
@@ -89,7 +99,8 @@
         String sql2=new String(build(connectivityValues,"connection",id));
         String sql3=new String(build(ageValues,"age",id));
         String sql4=new String(build(typeValues,"type",id));
-        String sqlFinal="select * from pro1 where pid in("+sql1+") and pid in("+sql2+") and pid in("+sql3+") and pid in("+sql4+")";
+        String sqlFinal="select * from product where id='"+id+"' and pid in("+sql1+") and pid in("+sql2+") and pid in("+sql3+") and pid in("+sql4+")";
+        System.out.println(sqlFinal);
         return sqlFinal;
     }
     %>
@@ -107,13 +118,13 @@
     </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div id="nav-col" class="col col-lg-12 col-md-12 col-sm-12">
+<%--<div id="stick" class="container-fluid">--%>
+<%--    <div class="row">--%>
+        <div id="nav-col" class="col col-lg-12 col-md-12 col-sm-12 sticky-top">
             <nav id="nav-color" class="navbar">
                 <h4>APTHAMITRA</h4>
-                <form class="form-inline ml-auto">
-                    <input type="text" name="search-value">
+                <form action="product.jsp" method="post" class="form-inline ml-auto">
+                    <input id="search-bar" type="text" name="search-value" value="">
                     <button type="submit">Search</button>
                 </form>
                 <div style="display: flex;">
@@ -126,8 +137,8 @@
                 </div>
             </nav>
         </div>
-    </div>
-</div>
+<%--    </div>--%>
+<%--</div>--%>
 <div id="pre">
     <h4 id="preference" style="display: inline-block;color: grey;">PREFERENCE ></h4>
 </div>
@@ -158,8 +169,8 @@
         </div>
         <h6>TYPE</h6>
         <div class="one">
-            <input type="checkbox" name="type" value="onhear"> ON Hear<br>
-            <input type="checkbox" name="type" value="overhear"> Over Hear <br>
+            <input type="checkbox" name="type" value="onEar"> ON Hear<br>
+            <input type="checkbox" name="type" value="overEar"> Over Hear <br>
         </div>
         <h6>MUSIC PREFERENCE</h6>
         <div class="one">
@@ -174,14 +185,28 @@
     <div class="container-fluid">
         <div class="row">
             <% while(rs.next()){ %>
-            <p> <%= rs.getString("name") %> </p>
+            <div class="col col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="h.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= rs.getString("name") %></h5>
+                        <p class="card-text">COLOR:<%= rs.getString("color") %></p>
+                        <p class="card-text">COLOR:<%= rs.getString("color") %></p>
+                        <form action="viewDescription.jsp" method="post">
+                            <button type="submit" value="<%=rs.getString("pid")%>" name="product-des">View Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <%}%>
         </div>
     </div>
 </div>
 </body>
+<script>
+var search=document.getElementById("search-bar")
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
 </html>

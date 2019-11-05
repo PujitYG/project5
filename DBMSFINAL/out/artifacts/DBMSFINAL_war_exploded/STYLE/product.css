@@ -48,6 +48,10 @@
     padding: 0;
 }
 
+#stick{
+    position: sticky;
+}
+
 .pro-sup{
     text-decoration: none;
     color: white;

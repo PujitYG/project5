@@ -30,7 +30,7 @@
     } catch (Exception e) {
         e.printStackTrace();
     }
-    String sql="Select * from product where id='"+id+"' and pid='"+pcid+"'";
+    String sql="Select * from product,prodDesc where id='"+id+"' and prodDesc.pid='"+pcid+"' and product.pid=prodDesc.pid";
     Statement stmt= null;
     try {
         stmt = conn.createStatement();
@@ -52,7 +52,7 @@
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><%=rs.getString("name")%></h5>
-                    <p class="card-text"><%=rs.getString("color")%></p>
+                    <p class="card-text"><%=rs.getString("type")%></p>
                     <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="jdk.nashorn.internal.ir.RuntimeNode" %>
+<%@ page import="com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,8 +38,21 @@
                 PreparedStatement stmt = conn.prepareStatement(finalSql);
                 rs = integrate(finalSql, request.getParameterValues("color"), request.getParameterValues("connect"), request.getParameterValues("age"), request.getParameterValues("type"), stmt);
             } else if (value.trim().length() != 0) {
-                String sql2 = "Select * from product where id='" + id + "' and name='" + value + "'";
+                String sql2 = "Select * from product,prodDesc where id='" + id + "' and name='" + value + "' and product.pid=prodDesc.pid";
+                String sql4= "select * from searchHistory where id='"+id+"' and  Sname='"+value.trim()+"'";
                 rs = st.executeQuery(sql2);
+                Statement st2=conn.createStatement();
+                ResultSet check=st2.executeQuery(sql4);
+                if(check.next()){
+                    String sql5="update searchHistory set count=count+1 where id='"+id+"' and Sname='"+value.trim()+"'";
+                    Statement st3=conn.createStatement();
+                    st3.execute(sql5);
+                }else{
+                    Statement st4=conn.createStatement();
+                    String sql3= "insert into searchHistory values('"+id+"','"+value.trim()+"',1)";
+                    st4.execute(sql3);
+                }
+                System.out.println(check.next());
             }
         }catch (SQLException e) {
             e.printStackTrace();
@@ -79,7 +93,7 @@
     %>
     <%!
         public static StringBuilder build(String[] values, String att,String id){
-            String si="Select pid from product where id='"+id+"'";
+            String si="Select prodDesc.pid from product,prodDesc where id='"+id+"' and product.pid=prodDesc.pid";
             StringBuilder sb=new StringBuilder(si);
             if(values!=null){
                 for(int i=0;i<values.length;i++){
@@ -99,7 +113,7 @@
         String sql2=new String(build(connectivityValues,"connection",id));
         String sql3=new String(build(ageValues,"age",id));
         String sql4=new String(build(typeValues,"type",id));
-        String sqlFinal="select * from product where id='"+id+"' and pid in("+sql1+") and pid in("+sql2+") and pid in("+sql3+") and pid in("+sql4+")";
+        String sqlFinal="select * from product,prodDesc where id='"+id+"' and product.pid=prodDesc.pid and prodDesc.pid in("+sql1+") and prodDesc.pid in("+sql2+") and prodDesc.pid in("+sql3+") and prodDesc.pid in("+sql4+")";
         System.out.println(sqlFinal);
         return sqlFinal;
     }
@@ -169,8 +183,8 @@
         </div>
         <h6>TYPE</h6>
         <div class="one">
-            <input type="checkbox" name="type" value="onEar"> ON Hear<br>
-            <input type="checkbox" name="type" value="overEar"> Over Hear <br>
+            <input type="checkbox" name="type" value="onEar"> ON Ear<br>
+            <input type="checkbox" name="type" value="overEar"> Over Ear <br>
         </div>
         <h6>MUSIC PREFERENCE</h6>
         <div class="one">

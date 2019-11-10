@@ -6,8 +6,12 @@
 <html lang="en">
 <head>
     <%
+        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
         HttpSession ses=request.getSession();
         final String id= (String) ses.getAttribute("id");
+        if(id==null){
+            response.sendRedirect("index.html");
+        }
         ResultSet rs = null;
         String finalSql=null;
         String[] colorValues=request.getParameterValues("color");
@@ -137,16 +141,19 @@
         <div id="nav-col" class="col col-lg-12 col-md-12 col-sm-12 sticky-top">
             <nav id="nav-color" class="navbar">
                 <h4>APTHAMITRA</h4>
-                <form action="product.jsp" method="post" class="form-inline ml-auto">
+                <form action="product.jsp" method="get" class="form-inline ml-auto">
                     <input id="search-bar" type="text" name="search-value" value="">
                     <button type="submit">Search</button>
                 </form>
                 <div style="display: flex;">
-                    <form action="">
-                        <input class="pro-sup" type="submit" value="PRODUCTS">
+                    <form method="post" action="productManager">
+                        <input class="pro-sup" type="submit" name="id" value="<%=id%>">
                     </form>
-                    <form action="">
-                        <input class="pro-sup" type="submit" value="SUPPORT">
+                    <form method="post" action="productManager">
+                        <button style="border: none;text-decoration: none;background-color: transparent;color: white" name="id" value="<%=id%>">Product</button>
+                    </form>
+                    <form action="logout.jsp">
+                        <input class="pro-sup" type="submit" value="LOG OUT">
                     </form>
                 </div>
             </nav>
@@ -160,7 +167,7 @@
     <h5>CHANGE</h5>
     <h6>COLOR</h6>
 
-    <form action="product.jsp" method="post">
+    <form action="product.jsp" method="get">
         <div class="one">
             <input type="checkbox" name="color" value="red"> RED <br>
             <input type="checkbox" name="color" value="pink"> PINK <br>
@@ -200,8 +207,8 @@
         <div class="row">
             <% while(rs.next()){ %>
             <div class="col col-lg-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="h.jpg" class="card-img-top" alt="...">
+                <div style="margin:30px" class="card" style="width: 18rem;">
+                    <img height="250px" src="h.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title"><%= rs.getString("name") %></h5>
                         <p class="card-text">COLOR:<%= rs.getString("color") %></p>

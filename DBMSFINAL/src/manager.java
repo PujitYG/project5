@@ -14,31 +14,30 @@ import java.util.Enumeration;
 @WebServlet("/manager")
 public class manager extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        String id=req.getParameter("id");
+        res.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+        String id=req.getParameter("id").trim();
         String password=req.getParameter("password");
-        ManagerInfo manager=new ManagerInfo(id,password);
         HttpSession ses=req.getSession();
         boolean check=false;
         try{
-           check=checkDB(manager);
+           check=checkDB(id,password);
         }catch(Exception e){
             e.printStackTrace();
         }
         if(check){
-            RequestDispatcher rd=req.getRequestDispatcher("product.jsp");
             ses.setAttribute("id",id);
-            rd.forward(req,res);
+            res.sendRedirect("product.jsp");
         }else{
-            res.sendRedirect("Manager.html");
+            res.sendRedirect("manager.jsp");
         }
     }
 
-    public static boolean checkDB(ManagerInfo manager) throws ClassNotFoundException, SQLException,NullPointerException {
+    public static boolean checkDB(String id,String password) throws ClassNotFoundException, SQLException,NullPointerException {
         Connection con=null;
         Statement stmt=null;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection("jdbc:mysql://localhost/learn","root","dancebar123");
-        String sql="select id,password from manager where (id='"+manager.id+"'and password='"+manager.password+"')";
+        String sql="select id,password from manager where (id='"+id+"'and password='"+password+"')";
         stmt=con.createStatement();
         ResultSet rs=stmt.executeQuery(sql);
         return rs.next();

@@ -16,6 +16,7 @@
 <body>
 <% HttpSession ses=request.getSession(); %>
 <%
+    response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
     if(ses.getAttribute("id")==null){
         response.sendRedirect("Error.jsp");
     }

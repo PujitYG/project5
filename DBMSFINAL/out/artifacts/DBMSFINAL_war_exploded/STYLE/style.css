@@ -10,7 +10,7 @@
 #content{
     background-image: url("mainPIC.jpg");
     margin-top: 8%;
-
+    height: calc( 100vh - 104px );
 }
 
 #body-id{
@@ -24,10 +24,11 @@
     }
 
     .right-main{
-        display: inline-block;
-        width:30%;
-        position: relative;
-        left:60%;
+        /*display: inline-block;*/
+        /*width:30%;*/
+        /*text-align:right;*/
+        /*position: relative;*/
+        /*left:60%;*/
     }
 
     @media screen and (max-width: 992px) {

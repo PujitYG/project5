@@ -1,0 +1,63 @@
+create table product(
+id varchar(20),
+pid varchar(20),
+primary key(id,pid),
+foreign key(id) references manager(id),
+foreign key(pid) references prodDesc(pid));
+
+insert into product values('dhdul','10');
+insert into product values('dhdul','12');
+insert into product values('dhdul','13');
+insert into product values('dhdul','14');
+insert into product values('dhdul','16');
+insert into product values('dhdul','17');
+
+--------------------------------------------------
+
+create table prodDesc(
+pid varchar(20),
+name varchar(30),
+color varchar(30),
+connection varchar(30),
+age int,
+type varchar(30),
+primary key(pid));
+
+insert into prodDesc values('10','A','green','wired',30,'onEar');
+insert into prodDesc values('11','B','red','wireless',null,'onEar');
+insert into prodDesc values('12','C','pink','wireless',10,'onEar');
+insert into prodDesc values('13','D','red','wireless',null,'overEar');
+insert into prodDesc values('14','E','white','wired',null,'onEar');
+insert into prodDesc values('15','S','yellow','wireless',null,'onEar');
+insert into prodDesc values('16','F','black','wired',20,'overEar');
+insert into prodDesc values('17','K','red','wired',null,'overEar');
+
+
+---------------------------------------------------
+
+
+
+create table searchHistory(
+id varchar(20),
+Sname varchar(20),
+count int,
+primary key(id,Sname),
+foreign key(id) references manager(id));
+
+select * from product where id='dhdul' and  Sname='A';
+
+
+insert into searchHistory values('dhdul','10',0);
+insert into searchHistory values('dhdul','14',0);
+insert into searchHistory values('dhdul','19',0);
+
+
+select * from product,prodDesc where id='dhdul' and product.pid=prodDesc.pid 
+and prodDesc.pid in
+(Select prodDesc.pid from product,prodDesc where id='dhdul' and product.pid=prodDesc.pid) 
+and prodDesc.pid in(Select prodDesc.pid from product,prodDesc where id='dhdul' and product.pid=prodDesc.pid)
+and prodDesc.pid in(Select prodDesc.pid from product,prodDesc where id='dhdul' and product.pid=prodDesc.pid) 
+and prodDesc.pid in(Select prodDesc.pid from product,prodDesc where id='dhdul' and product.pid=prodDesc.pid)
+
+
+

@@ -143,11 +143,11 @@
                 <h4>APTHAMITRA</h4>
                 <form action="product.jsp" method="get" class="form-inline ml-auto">
                     <input id="search-bar" type="text" name="search-value" value="">
-                    <button type="submit">Search</button>
+                    <button style="color:white;background-color: transparent;border: 1px solid white " type="submit">Search</button>
                 </form>
                 <div style="display: flex;">
                     <form method="post" action="productManager">
-                        <input class="pro-sup" type="submit" name="id" value="<%=id%>">
+                        <input class="pro-sup text-uppercase" type="submit" name="id" value="<%=id%>">
                     </form>
                     <form method="post" action="productManager">
                         <button style="border: none;text-decoration: none;background-color: transparent;color: white" name="id" value="<%=id%>">Product</button>

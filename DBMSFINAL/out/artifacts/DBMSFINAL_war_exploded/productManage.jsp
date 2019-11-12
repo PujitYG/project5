@@ -17,33 +17,42 @@
 <%HttpSession ses=request.getSession(); %>
 <% String id= (String) ses.getAttribute("id"); %>
 <%ArrayList arr=(ArrayList) ses.getAttribute("product");%>
+<% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");%>
         <div>
             here come jumbotron
-            <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");%>
         </div>
     <div class="container">
         <div class="row">
-            <%for(Object p:arr){
+            <%
+               if(id!=null){
+                for(Object p:arr){
             Product product=(Product) p; %>
             <div class="col col-lg-8 mx-auto">
                 <div>
                     <p style="display: inline-block;width:200px;" ><%=product.name%></p>
                     <p style="display: inline-block;width:200px;" ><%=product.ProductID%></p>
-                    <form action="change">
+                    <form style="display: inline-block" action="change.jsp">
                     <button type="submit" name="pid" value="<%=product.ProductID%>">Change Description</button>
                     </form>
-                    <form action="delete">
+                    <form style="display: inline-block"  action="delete">
                         <button type="submit" name="pid" value="<%=product.ProductID%>"><span>X</span></button>
                     </form>
                 </div>
             </div>
-            <% }%>
+            <% }}else{
+                response.sendRedirect("index.html");
+            }%>
         </div>
         <div class="row">
             <div class="col col-lg-12">
                 <form action="product.jsp">
                     <button type="submit">
                         HOME
+                    </button>
+                </form>
+                <form action="newProduct.jsp">
+                    <button type="submit">
+                        ADD PRODUCT
                     </button>
                 </form>
             </div>

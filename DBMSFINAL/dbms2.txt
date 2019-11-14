@@ -1,0 +1,31 @@
+select max(count),location
+from manager,searchHistory
+where manager.id=searchHistory.id
+group by location,Sname
+
+select Sname,max(count)
+from searchHistory
+where id='tjyai';
+
+select Sname,location 
+from searchHistory
+where count in(select max(count) from searchHistory where id='tjyai')
+and id='tjyai';
+(
+
+
+create procedure sp1()
+select Sname,count,location from
+searchHistory,manager where (count,location) in(select max(count),location
+from manager,searchHistory
+where manager.id=searchHistory.id
+group by location)
+and manager.id=searchHistory.id;
+
+create trigger t1
+after delete on Product
+for each row
+insert into deleteHistory values(old.id,old.pid);
+
+
+t1 and sp1

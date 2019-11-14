@@ -16,10 +16,13 @@ public class newProduct extends HttpServlet {
         HttpSession ses=request.getSession();
         ResultSet rs=null;
         final String id=(String) ses.getAttribute("id");
-        if(id==null){
+        String sid=(String) ses.getAttribute("temp");
+        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+        if(id!=null && sid!=null) {
+            response.sendRedirect("newProduct.jsp");
+        }else{
             response.sendRedirect("index.html");
         }
-        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
         Connection conn=null;
         PreparedStatement stmt=null,stmt1=null;
         try {
@@ -37,11 +40,6 @@ public class newProduct extends HttpServlet {
             stmt1.execute();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        if(id!=null) {
-            response.sendRedirect("newProduct.jsp");
-        }else{
-            response.sendRedirect("index.html");
         }
     }
 }

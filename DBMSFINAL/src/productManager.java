@@ -1,3 +1,5 @@
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,19 +12,23 @@ import Product.*;
 
 @WebServlet("/productManager")
 public class productManager extends HttpServlet {
-    public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession ses=request.getSession();
         final String id=(String)ses.getAttribute("id");
+        final String sid=(String) ses.getAttribute("temp");
         try {
             ArrayList<Product> arr=getProduct(id);
             ses.setAttribute("product",arr);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if(id==null){
+        if(id==null || sid==null){
+            ses.invalidate();
             response.sendRedirect("index.html");
         }else{
-            response.sendRedirect("productManage.jsp");
+            RequestDispatcher rd=request.getRequestDispatcher("productManage.jsp");
+            rd.forward(request,response);
+//            response.sendRedirect("productManage.jsp");
         }
     }
     public ArrayList<Product> getProduct(String id) throws SQLException {

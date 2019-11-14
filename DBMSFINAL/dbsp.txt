@@ -1,0 +1,16 @@
+
+
+create procedure sp2(Sid varchar(20))
+select Sname,count,location
+from searchHistory A,manager M where count in(select max(count)
+from searchHistory B where B.id=Sid)
+and A.id=M.id;
+
+create procedure sp0(Mid varchar(20))
+select * from manager where id=Mid;
+
+
+select A.pid,B.name
+from deleteHistory A,prodDesc B
+where A.pid=B.pid and
+A.id='dhdul';

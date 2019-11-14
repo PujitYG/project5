@@ -10,7 +10,8 @@
     HttpSession ses=request.getSession();
     ResultSet rs=null;
     final String id=(String) ses.getAttribute("id");
-if(id==null){
+    String sid= (String) ses.getAttribute("temp");
+if(id==null || sid==null){
     response.sendRedirect("index.html");
 }
     response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");

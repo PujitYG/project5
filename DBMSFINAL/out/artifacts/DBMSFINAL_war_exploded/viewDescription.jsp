@@ -45,19 +45,31 @@
         e.printStackTrace();
     }
 %>
+<div style="background-color: grey" class="row">
+    <h1 class="mx-auto">PRODUCT DESCRIPTION</h1>
+</div><br><br>
 <div class="container">
     <div class="row">
-        <div class="col col-12">
             <% while(rs.next()) { %>
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><%=rs.getString("name")%></h5>
-                    <p class="card-text"><%=rs.getString("type")%></p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="col col-lg-6">
+                    <img src="h.jpg" alt="Image here" width="100%">
                 </div>
-            </div>
-        </div>
+                <div class="col col-lg-6">
+                    <h3 style="text-align: justify;width: 100%"><%=rs.getString("name")%> Super Extra Bass <% if( (rs.getString("connection").equalsIgnoreCase("wireless")) ){
+                        out.print("Bluetooth");
+                    }else out.print("wired");%> Headset with Mic  (<%=rs.getString("color")%>,<% if( (rs.getString("type").equalsIgnoreCase("onEar")) ){
+                       out.print("ON THE EAR");
+                    }else out.print("OVER THE EAR");%>)</h3>
+                    <p> No Cost EMI on Bajaj Finserv EMI Card on cart value above ₹4499T&C</p>
+                    <div class="desc">
+                        <div>
+                            <p style="margin-right:10px;font-family: verdana;font-style: italic;">Description</p>
+                        </div>
+                        <div style="text-align: justify;width: 100%;">
+                            <p> <%=rs.getString("Description")%></p>
+                        </div>
+                    </div>
+                </div>
         <% } %>
     </div>
 </div>

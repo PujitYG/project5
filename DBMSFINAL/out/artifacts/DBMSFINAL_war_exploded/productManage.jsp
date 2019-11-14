@@ -16,6 +16,7 @@
 <body>
 <%HttpSession ses=request.getSession(); %>
 <% String id= (String) ses.getAttribute("id"); %>
+<%String sid=(String) ses.getAttribute("temp"); %>
 <%ArrayList arr=(ArrayList) ses.getAttribute("product");%>
 <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");%>
         <div>
@@ -24,7 +25,7 @@
     <div class="container">
         <div class="row">
             <%
-               if(id!=null){
+               if(id!=null && sid!=null){
                 for(Object p:arr){
             Product product=(Product) p; %>
             <div class="col col-lg-8 mx-auto">
@@ -53,6 +54,11 @@
                 <form action="newProduct.jsp">
                     <button type="submit">
                         ADD PRODUCT
+                    </button>
+                </form>
+                <form action="productManager">
+                    <button type="submit">
+                        REFRESH
                     </button>
                 </form>
             </div>

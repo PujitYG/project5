@@ -8,6 +8,7 @@
     <%
         response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
         HttpSession ses=request.getSession();
+        ses.setAttribute("temp",null);
         final String id= (String) ses.getAttribute("id");
         if(id==null){
             response.sendRedirect("index.html");
@@ -146,11 +147,13 @@
                     <button style="color:white;background-color: transparent;border: 1px solid white " type="submit">Search</button>
                 </form>
                 <div style="display: flex;">
-                    <form method="post" action="productManager">
-                        <input class="pro-sup text-uppercase" type="submit" name="id" value="<%=id%>">
+                    <form method="post" action="validate.jsp">
+                        <input class="pro-sup text-uppercase" type="submit" name="id" value="Support">
+                        <input type="hidden" name="page" value="S">
                     </form>
-                    <form method="post" action="productManager">
+                    <form method="post" action="validate.jsp">
                         <button style="border: none;text-decoration: none;background-color: transparent;color: white" name="id" value="<%=id%>">Product</button>
+                        <input type="hidden" name="page" value="PM">
                     </form>
                     <form action="logout.jsp">
                         <input class="pro-sup" type="submit" value="LOG OUT">

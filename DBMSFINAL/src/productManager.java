@@ -16,16 +16,15 @@ public class productManager extends HttpServlet {
         HttpSession ses=request.getSession();
         final String id=(String)ses.getAttribute("id");
         final String sid=(String) ses.getAttribute("temp");
-        try {
-            ArrayList<Product> arr=getProduct(id);
-            ses.setAttribute("product",arr);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         if(id==null || sid==null){
-            ses.invalidate();
             response.sendRedirect("index.html");
         }else{
+            try {
+                ArrayList<Product> arr=getProduct(id);
+                ses.setAttribute("product",arr);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             RequestDispatcher rd=request.getRequestDispatcher("productManage.jsp");
             rd.forward(request,response);
 //            response.sendRedirect("productManage.jsp");

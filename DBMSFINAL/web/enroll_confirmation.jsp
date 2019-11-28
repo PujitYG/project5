@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 <body>
 <h1 style="text-align: center;color: rgb(4, 33, 97);">
@@ -20,6 +21,9 @@
 <p style="text-align: center;color:rgb(4, 33, 97);font-size: x-large">Your unique ID:<span id="thi"></span></p>
 <p style="text-align: center;color:rgb(4, 33, 97);font-size: x-large">Do NOT reload the page</p>
 <p style="text-align: center;color:rgb(4, 33, 97);font-size: x-large">Take note of the unique id</p>
+<form method="post" class="text-center" action="manager.jsp">
+    <button class="btn btn-dark" type="submit">LOGIN</button>
+</form>
 <script>
     var check=true;
     var data;

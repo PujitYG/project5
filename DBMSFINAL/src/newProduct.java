@@ -20,9 +20,6 @@ public class newProduct extends HttpServlet {
         response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
         if(id!=null && sid!=null) {
             response.sendRedirect("newProduct.jsp");
-        }else{
-            response.sendRedirect("index.html");
-        }
         Connection conn=null;
         PreparedStatement stmt=null,stmt1=null;
         try {
@@ -40,6 +37,9 @@ public class newProduct extends HttpServlet {
             stmt1.execute();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        }else{
+            response.sendRedirect("index.html");
         }
     }
 }

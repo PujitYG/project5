@@ -41,9 +41,10 @@
             Statement st = conn.createStatement();
             if (value.trim().length() == 0) {
                 PreparedStatement stmt = conn.prepareStatement(finalSql);
-                rs = integrate(finalSql, request.getParameterValues("color"), request.getParameterValues("connect"), request.getParameterValues("age"), request.getParameterValues("type"), stmt);
+               rs = integrate(finalSql, colorValues, request.getParameterValues("connect"), request.getParameterValues("age"), request.getParameterValues("type"), stmt);
             } else if (value.trim().length() != 0) {
-                String sql2 = "Select * from product,prodDesc where id='" + id + "' and name='" + value + "' and product.pid=prodDesc.pid";
+                System.out.println("inside search");
+                String sql2 = "Select * from product,prodDesc where id='" + id + "' and name like '%" + value + "%' and product.pid=prodDesc.pid";
                 String sql4= "select * from searchHistory where id='"+id+"' and  Sname='"+value.trim()+"'";
                 rs = st.executeQuery(sql2);
                 Statement st2=conn.createStatement();
@@ -69,6 +70,7 @@
             int k=1;
             if(colorValues!=null) {
                 for (i = 0; i < colorValues.length; i++) {
+                    System.out.println(colorValues[i]);
                     stmt.setString(k, colorValues[i]);
                     k++;
                 }
@@ -103,12 +105,18 @@
             if(values!=null){
                 for(int i=0;i<values.length;i++){
                     if(i==0){
-                        sb.append(" and "+att+"=?");
-                        sb.append(" or "+att+" is null");
+                        sb.append(" and ").append(att).append(" in('0',?");
                     }else{
-                        sb.append(" or "+att+"=?");
+                        sb.append(",?");
                     }
+//                    if(i==0){
+//                        sb.append(" and "+att+"=?");
+//                        sb.append(" or "+att+" is null");
+//                    }else{
+//                        sb.append(" or "+att+"=?");
+//                    }
                 }
+                sb.append(")");
             }
             return sb;
         }
@@ -132,6 +140,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <style>
 
     </style>
@@ -152,7 +161,7 @@
                         <input type="hidden" name="page" value="S">
                     </form>
                     <form method="post" action="validate.jsp">
-                        <button style="border: none;text-decoration: none;background-color: transparent;color: white" name="id" value="<%=id%>">Product</button>
+                        <button class="text-uppercase" style="border: none;text-decoration: none;background-color: transparent;color: white" name="id" value="<%=id%>">Product</button>
                         <input type="hidden" name="page" value="PM">
                     </form>
                     <form action="logout.jsp">
@@ -215,9 +224,9 @@
                     <div class="card-body">
                         <h5 class="card-title"><%= rs.getString("name") %></h5>
                         <p class="card-text">COLOR:<%= rs.getString("color") %></p>
-                        <p class="card-text">COLOR:<%= rs.getString("color") %></p>
+                        <p class="card-text">Type:<%= rs.getString("type") %></p>
                         <form action="viewDescription.jsp" method="post">
-                            <button type="submit" value="<%=rs.getString("pid")%>" name="product-des">View Details</button>
+                            <button class="btn btn-dark" type="submit" value="<%=rs.getString("pid")%>" name="product-des">View Details</button>
                         </form>
                     </div>
                 </div>

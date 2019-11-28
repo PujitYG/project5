@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Product Description</title>
-
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -45,10 +45,21 @@
         e.printStackTrace();
     }
 %>
-<div style="background-color: grey" class="row">
-    <h1 class="mx-auto">PRODUCT DESCRIPTION</h1>
-</div><br><br>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-7">Product Description</h2>
+        <p class="lead">Product</p>
+    </div>
+</div>
 <div class="container">
+    <div class="row">
+        <div class="col col-lg-12">
+            <form class="text-right" action="product.jsp" method="post">
+                <button class="btn btn-dark" type="submit">
+                    HOME
+                </button>
+            </form>
+        </div>
     <div class="row">
             <% while(rs.next()) { %>
                 <div class="col col-lg-6">

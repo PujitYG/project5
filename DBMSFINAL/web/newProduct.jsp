@@ -34,7 +34,22 @@ if(id==null || sid==null){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+<div class="jumbotron jumbotron-fluid">
     <div class="container">
+        <h1 class="display-7">Add Product</h1>
+        <p class="lead">Product</p>
+    </div>
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-12">
+                <form class="text-right" action="productManager" method="post">
+                    <button class="btn btn-dark" type="submit">
+                        Back
+                    </button>
+                </form>
+            </div>
+        </div>
         <div class="row mx-auto">
             <div class="col col-lg-8">
                 <form action="newProduct" method="post">
@@ -44,12 +59,12 @@ if(id==null || sid==null){
                         <option value="<%=rs.getString("pid")%>"><%=rs.getString("name")%></option>
                         <%}%>
                     </select>
-                    <input type="submit">
+                    <input class="btn btn-dark" type="submit">
                 </form>
             </div>
             <div class="col col-lg-8">
                 <form action="productManager">
-                    <input type="submit" value="HOME">
+                    <input class="btn btn-dark" type="submit" value="HOME">
                 </form>
             </div>
         </div>

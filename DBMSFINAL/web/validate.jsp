@@ -9,16 +9,22 @@
 <html>
 <head>
     <title>VALIDATION</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 <%
+    HttpSession ses=request.getSession();
+    String id=(String) ses.getAttribute("id");
     response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+    if(id==null){
+        response.sendRedirect("index.html");
+    }
 %>
 <body>
         <form action="validate" method="post">
             <h5>ENTER YOUR PASSWORD</h5>
             <input type="password" name="password" value="">
             <input type="hidden" name="page" value="<%=request.getParameter("page")%>">
-            <button type="submit">SUBMIT</button>
+            <button class="btn btn-dark" type="submit">SUBMIT</button>
         </form>
 </body>
 </html>

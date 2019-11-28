@@ -12,6 +12,7 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Support</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 <body>
     <%
@@ -25,8 +26,22 @@
         rs1= (ResultSet) request.getAttribute("rs1");
         ResultSet rs2=(ResultSet) request.getAttribute("rs2");
     %>
-<h1 style="display: block;background-color: grey;text-align: center">SUPPORT PAGE</h1>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-7">Support</h1>
+            <p class="lead">Manager</p>
+        </div>
+    </div>
 <div class="container">
+    <div class="row">
+    <div class="col col-lg-12">
+        <form class="text-right" action="product.jsp" method="post">
+            <button class="btn btn-dark" type="submit">
+                HOME
+            </button>
+        </form>
+    </div>
+</div>
     <div class="row">
         <div class="col col-lg-8">
             <%if(id!=null && sid!=null){
@@ -44,7 +59,7 @@
                             <input type="text" name="address" value="<%=rs0.getString("address")%>">
                              <h5>CITY</h5>
                              <h6><%=rs0.getString("location")%></h6>
-                             <button type="submit">Change</button>
+                             <button class="btn btn-dark" type="submit">Change</button>
                                 <br>
                             </form>
             <%  } %>
@@ -121,15 +136,6 @@
                 }%>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col col-lg-12">
-            <form action="product.jsp" method="post">
-                <button type="submit">
-                        HOME
-                </button>
-            </form>
         </div>
     </div>
 </div>

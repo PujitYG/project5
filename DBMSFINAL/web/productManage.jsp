@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Manage Products</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -19,10 +20,28 @@
 <%String sid=(String) ses.getAttribute("temp"); %>
 <%ArrayList arr=(ArrayList) ses.getAttribute("product");%>
 <% response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");%>
-        <div>
-            here come jumbotron
+<div class="jumo-heading container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">SETTINGS</h1>
+                    <p class="lead">PRODUCTS</p>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
     <div class="container">
+        <div class="row">
+            <div class="col col-lg-12">
+                <form class="text-right" action="product.jsp" method="post">
+                    <button class="btn btn-dark" type="submit">
+                        HOME
+                    </button>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <%
                if(id!=null && sid!=null){
@@ -33,10 +52,10 @@
                     <p style="display: inline-block;width:200px;" ><%=product.name%></p>
                     <p style="display: inline-block;width:200px;" ><%=product.ProductID%></p>
                     <form style="display: inline-block" action="change.jsp">
-                    <button type="submit" name="pid" value="<%=product.ProductID%>">Change Description</button>
+                    <button class="btn btn-dark" type="submit" name="pid" value="<%=product.ProductID%>">Change Description</button>
                     </form>
                     <form style="display: inline-block"  action="delete">
-                        <button type="submit" name="pid" value="<%=product.ProductID%>"><span>X</span></button>
+                        <button class="btn btn-dark" type="submit" name="pid" value="<%=product.ProductID%>"><span>Remove Item</span></button>
                     </form>
                 </div>
             </div>
@@ -46,18 +65,13 @@
         </div>
         <div class="row">
             <div class="col col-lg-12">
-                <form action="product.jsp">
-                    <button type="submit">
-                        HOME
-                    </button>
-                </form>
                 <form action="newProduct.jsp">
-                    <button type="submit">
+                    <button class="btn btn-dark" type="submit">
                         ADD PRODUCT
                     </button>
                 </form>
                 <form action="productManager">
-                    <button type="submit">
+                    <button class="btn btn-dark" type="submit">
                         REFRESH
                     </button>
                 </form>

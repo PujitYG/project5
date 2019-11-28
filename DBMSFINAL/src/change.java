@@ -15,6 +15,7 @@ public class change extends HttpServlet {
         HttpSession ses=req.getSession();
         final String id= (String) ses.getAttribute("id");
         final String pid=(String) req.getParameter("pid");
+        String sid=(String) ses.getAttribute("temp");
         String name=req.getParameter("name");
         String color=req.getParameter("color");
         String connection=req.getParameter("connection");
@@ -22,6 +23,7 @@ public class change extends HttpServlet {
         String desc=req.getParameter("desc");
         Connection conn = null;
         PreparedStatement stmt=null;
+        if(id!=null && sid!=null){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost/learn","root","dancebar123");
@@ -36,7 +38,6 @@ public class change extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(id!=null){
             res.sendRedirect("productManager");
         }else{
             res.sendRedirect("index.html");

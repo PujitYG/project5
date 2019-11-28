@@ -42,7 +42,7 @@ public class validate extends HttpServlet {
                 }
             }
         }catch(Exception e){
-
+                e.printStackTrace();
         }
     }
 }
